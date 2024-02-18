@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -37,11 +38,12 @@ func createEvent(context *gin.Context) {
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
 	if err != nil {
+		fmt.Println(err)
+
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data."})
 		return
 	}
 
-	event.ID = 1
 	event.UserID = 1
 
 	err = event.Save()
